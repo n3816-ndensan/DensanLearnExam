@@ -1,8 +1,8 @@
 @page "/taskForm"
-@inject NavigationManager NavigationManager
 @rendermode InteractiveServer
+@inherits TaskFormModel
 
-<h3>TaskForm</h3>
+<h1>タスク登録</h1>
 
 <EditForm Model="@newTask" OnValidSubmit="HandleValidSubmitAsync">
     <DataAnnotationsValidator />
@@ -28,26 +28,3 @@
     <RadzenButton Text="タスク登録" ButtonType="Radzen.ButtonType.Submit"></RadzenButton>
     <RadzenButton Text="Cancel" ButtonType="Radzen.ButtonType.Button" Click="@NavigateToHomeAsync"></RadzenButton>
 </EditForm>
-
-@code {
-    private TaskItem newTask = new TaskItem();
-
-    [Inject]
-    private TaskService? TaskService { get; set; }
-
-    private async Task HandleValidSubmitAsync()
-    {
-        // タスク一覧にタスクを追加し、タスク一覧画面へ遷移
-        if (TaskService != null)
-        {
-            await TaskService.AddTaskAsync(newTask);
-        }
-        NavigationManager.NavigateTo("/");
-    }
-
-    protected async Task NavigateToHomeAsync()
-    {
-        await Task.Yield();
-        NavigationManager.NavigateTo("/");
-    }
-}

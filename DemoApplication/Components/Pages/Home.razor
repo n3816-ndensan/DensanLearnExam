@@ -1,11 +1,10 @@
 ﻿@page "/"
-@inject NavigationManager NavigationManager
 @rendermode InteractiveServer
+@inherits HomeModel
 
 <PageTitle>TaskList</PageTitle>
 
 <h1>タスク一覧</h1>
-
 
 <RadzenButton Text="タスクを追加" class="btn btn-primary" Click="NavigateToTaskFormAsync"></RadzenButton>
 
@@ -14,42 +13,11 @@
         <RadzenDataGridColumn TItem="TaskItem" Property="Title" Title="題名"></RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="TaskItem" Property="DueDate" Title="期日"></RadzenDataGridColumn>
         <RadzenDataGridColumn TItem="TaskItem" Property="Status" Title="状態"></RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="TaskItem" Property="Description" Title="内容"></RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="TaskItem" Title="内容">
+            <Template Context="task">
+            @task.Description.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()
+            </Template>
+        </RadzenDataGridColumn>
     </Columns>
 </RadzenDataGrid>
 
-@code {
-    private List<TaskItem> TaskList = new List<TaskItem>();
-
-    [Inject]
-    private TaskService? TaskService { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (TaskService != null)
-        {
-            TaskList = await TaskService.GetTasksAsync();
-        }
-
-        // 状態の小さい順、期限の近い順にソート
-        TaskList.Sort((x, y) =>
-        {
-            // 状態で比較（小さい順）
-            int statusComparison = x.Status.CompareTo(y.Status);
-
-            // 状態が同じ場合は期日で比較（近い順）
-            if (statusComparison == 0)
-            {
-                return x.DueDate.CompareTo(y.DueDate);
-            }
-
-            return statusComparison;
-        });
-    }
-
-    private async Task NavigateToTaskFormAsync()
-    {
-        await Task.Yield();
-        NavigationManager.NavigateTo("/taskform");
-    }
-}
