@@ -1,0 +1,36 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status" class="@GetCountClass()">Current count: @currentCount</p>
+
+<RadzenButton Text="＋" ButtonType="Radzen.ButtonType.Button" Click="@IncrementCount"></RadzenButton>
+<RadzenButton Text="－" ButtonType="Radzen.ButtonType.Button" Click="@DecrementCount"></RadzenButton>
+
+@code {
+    private int currentCount = 0;
+
+    private string GetCountClass()
+    {
+        return currentCount >= 1 && currentCount <= 5 ? "red-text" : string.Empty;
+    }
+
+    protected void IncrementCount(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
+    {
+        currentCount++;
+    }
+
+    protected void DecrementCount(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
+    {
+        currentCount--;
+    }
+}
+
+<style>
+    .red-text {
+        color: red;
+    }
+</style>

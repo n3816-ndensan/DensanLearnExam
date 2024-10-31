@@ -1,0 +1,53 @@
+@page "/taskForm"
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<h3>TaskForm</h3>
+
+<EditForm Model="@newTask" OnValidSubmit="HandleValidSubmitAsync">
+    <DataAnnotationsValidator />
+    <div>
+        <RadzenLabel Text="題名" />
+        <RadzenTextBox @bind-Value="@newTask.Title" Style="width: 225px"></RadzenTextBox>
+        <ValidationMessage For="@(() => newTask.Title)" />
+    </div>
+    <div>
+        <RadzenLabel Text="期日" />
+        <RadzenDatePicker TValue="DateTime" @bind-Value="@newTask.DueDate" DateFormat="yyyy/MM/dd" Style="width: 124px" ></RadzenDatePicker>
+        <ValidationMessage For="@(() => newTask.DueDate)" />
+    </div>
+    <div>
+        <RadzenLabel Text="状態" />
+        <RadzenDropDown TValue="TaskState" @bind-Value="@newTask.Status" Data="Enum.GetValues(typeof(TaskState))" Style="width: 124px"></RadzenDropDown>
+        <ValidationMessage For="@(() => newTask.Status)" />
+    </div>
+    <div>
+        <RadzenLabel Text="内容" Style="float: left" />
+        <RadzenTextArea @bind-Value="@newTask.Description" Style="height: 91px; width: 230px"></RadzenTextArea>
+    </div>
+    <RadzenButton Text="タスク登録" ButtonType="Radzen.ButtonType.Submit"></RadzenButton>
+    <RadzenButton Text="Cancel" ButtonType="Radzen.ButtonType.Button" Click="@NavigateToHomeAsync"></RadzenButton>
+</EditForm>
+
+@code {
+    private TaskItem newTask = new TaskItem();
+
+    [Inject]
+    private TaskService? TaskService { get; set; }
+
+    private async Task HandleValidSubmitAsync()
+    {
+        // タスク一覧にタスクを追加し、タスク一覧画面へ遷移
+        if (TaskService != null)
+        {
+            await TaskService.AddTaskAsync(newTask);
+        }
+        NavigationManager.NavigateTo("/");
+    }
+
+    protected async Task NavigateToHomeAsync()
+    {
+        await Task.Yield();
+        NavigationManager.NavigateTo("/");
+    }
+}
