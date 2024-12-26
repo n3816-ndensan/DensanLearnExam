@@ -1,7 +1,9 @@
 using DemoApplication.Components.Model;
+using DemoApplication.Components.Entities;
 using Microsoft.AspNetCore.Components;
 
-public class EmployeeFormModel : ComponentBase
+namespace DemoApplication.Components.Pages;
+public partial class EmployeeForm
 {
     protected EmployeeItem newEmployee = new EmployeeItem();
 

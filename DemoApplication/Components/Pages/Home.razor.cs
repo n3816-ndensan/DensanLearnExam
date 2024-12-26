@@ -1,7 +1,10 @@
 using DemoApplication.Components.Model;
+using DemoApplication.Components.Entities;
 using Microsoft.AspNetCore.Components;
 
-public class Home : ComponentBase
+namespace DemoApplication.Components.Pages;
+
+public partial class Home : ComponentBase
 {
     protected List<EmployeeItem> EmployeeList = new List<EmployeeItem>();
 

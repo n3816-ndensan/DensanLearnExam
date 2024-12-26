@@ -1,4 +1,6 @@
-using DemoApplication.Components.Model;
+using DemoApplication.Components.Entities;
+
+namespace DemoApplication.Components.Model;
 
 public class EmployeeService
 {

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace DemoApplication.Components.Model
+namespace DemoApplication.Components.Entities
 {
     public class EmployeeItem : IComparable<EmployeeItem>
     {
