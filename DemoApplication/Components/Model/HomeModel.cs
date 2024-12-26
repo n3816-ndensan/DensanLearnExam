@@ -3,43 +3,30 @@ using Microsoft.AspNetCore.Components;
 
 public class HomeModel :ComponentBase
 {
-    protected List<TaskItem> TaskList = new List<TaskItem>();
+    protected List<EmployeeItem> EmployeeList = new List<EmployeeItem>();
 
     [Inject]
-    protected TaskService? TaskService { get; set; }
+    protected EmployeeService? EmployeeService { get; set; }
 
     [Inject]
     protected NavigationManager? NavigationManager { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        if (TaskService != null)
+        if (EmployeeService != null)
         {
-            TaskList = await TaskService.GetTasksAsync();
+            EmployeeList = await EmployeeService.GetTasksAsync();
         }
 
-        // 状態の小さい順、期限の近い順にソート
-        TaskList.Sort((x, y) =>
-        {
-            // 状態で比較（小さい順）
-            int statusComparison = x.Status.CompareTo(y.Status);
-
-            // 状態が同じ場合は期日で比較（近い順）
-            if (statusComparison == 0)
-            {
-                return x.DueDate.CompareTo(y.DueDate);
-            }
-
-            return statusComparison;
-        });
+        EmployeeList.Sort();
     }
 
-    protected async Task NavigateToTaskFormAsync()
+    protected async Task NavigateToEmployeeFormAsync()
     {
         if (NavigationManager != null)
         {
             await Task.Yield();
-        NavigationManager.NavigateTo("/taskform");
+        NavigationManager.NavigateTo("/employeeForm");
         }
     }
 }

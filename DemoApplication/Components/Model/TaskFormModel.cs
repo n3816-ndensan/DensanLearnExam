@@ -16,7 +16,7 @@ public class TaskFormModel : ComponentBase
         if (TaskService != null && NavigationManager != null)
         {
             await TaskService.AddTaskAsync(newTask);
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/taskList");
         }
     }
 
@@ -25,7 +25,7 @@ public class TaskFormModel : ComponentBase
         if (NavigationManager != null)
         {
             await Task.Yield();
-            NavigationManager.NavigateTo("/");
+            NavigationManager.NavigateTo("/taskList");
         }
     }
 }

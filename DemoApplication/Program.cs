@@ -7,6 +7,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<EmployeeService>();
 
 var app = builder.Build();
 

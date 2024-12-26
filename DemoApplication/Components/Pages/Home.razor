@@ -1,21 +1,21 @@
-﻿@page "/"
+@page "/"
 @rendermode InteractiveServer
 @inherits HomeModel
 
-<PageTitle>TaskList</PageTitle>
+<PageTitle>EmployeeList</PageTitle>
 
-<h1>タスク一覧</h1>
+<h1>社員一覧</h1>
 
-<RadzenButton Text="タスクを追加" class="btn btn-primary" Click="NavigateToTaskFormAsync"></RadzenButton>
+<RadzenButton Text="社員を追加" class="btn btn-primary" Click="NavigateToEmployeeFormAsync"></RadzenButton>
 
-<RadzenDataGrid TItem="TaskItem" Style="width: 738px" Data="@TaskList">
+<RadzenDataGrid TItem="EmployeeItem" Style="width: 738px" Data="@EmployeeList" AllowColumnResize="true">
     <Columns>
-        <RadzenDataGridColumn TItem="TaskItem" Property="Title" Title="題名"></RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="TaskItem" Property="DueDate" Title="期日"></RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="TaskItem" Property="Status" Title="状態"></RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="TaskItem" Title="内容">
-            <Template Context="task">
-            @task.Description.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()
+        <RadzenDataGridColumn TItem="EmployeeItem" Property="Name" Title="氏名"></RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EmployeeItem" Property="HireDate" Title="入社日" FormatString="{0:yyyy/MM/dd}"></RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EmployeeItem" Property="EmploymentType" Title="雇用形態"></RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="EmployeeItem" Title="備考">
+            <Template Context="employee">
+            @employee.Remarks.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault()
             </Template>
         </RadzenDataGridColumn>
     </Columns>
